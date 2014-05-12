@@ -13,7 +13,7 @@
 #                                                                             #
 ###############################################################################
 
-
+# modified for ZSH and custom prompt
 
 ###[ Configuration options ]###################################################
 
@@ -25,7 +25,7 @@ function get_config {
 	ret=""
 	if [ -f $config_file ]
 	then
-		ret=$(grep "^$1:" $config_file | awk -F: '{print $2}') 
+		ret=$(grep "^$1:" $config_file | awk -F: '{print $2}')
 	fi
 
 	if [ "X$ret" = "X" ]
@@ -44,10 +44,10 @@ fetch_cmd=$(get_config "fetch_cmd" || echo "curl -s")
 
 jqpath="`which jq`"
 if [ "$jqpath" == "" ]
-then 
+then
 	echo -e "\njq binary is not found, please download it from http://stedolan.github.io/jq/ and put it in your PATH"
 	exit 255
-fi 
+fi
 
 
 
@@ -107,10 +107,18 @@ done
 
 #### [ Colors and characters ]#################################################
 
-background=$(get_config "background" || echo "\033[44m")
+background_t=$(get_config "background_t" || echo "\033[44m")
+background_w=$(get_config "background_w" || echo "\033[44m")
+background_h=$(get_config "background_h" || echo "\033[44m")
+background_p=$(get_config "background_p" || echo "\033[44m")
 text=$(get_config "text" || echo "\033[36;1m")
-data=$(get_config "data" || echo "\033[33;1m")
-delimiter=$(get_config "delimiter" || echo "\033[35m=>")
+data_l=$(get_config "data_l" || echo "\033[33;1m")
+data_d=$(get_config "data_d" || echo "\033[33;1m")
+delimiter_t=$(get_config "delimiter_t" || echo "\033[35m=>")
+delimiter_w=$(get_config "delimiter_w" || echo "\033[35m=>")
+delimiter_h=$(get_config "delimiter_h" || echo "\033[35m=>")
+delimiter_p=$(get_config "delimiter_p" || echo "\033[35m=>")
+
 dashes=$(get_config "dashes" || echo "\033[34m-")
 
 
@@ -216,7 +224,7 @@ directions=(N NNE NE ENE E ESE SE SSE S SSW SW WSW W WNW NW NNW)
 
 if [ $forecast = 0 ]
 then
-	direction=${directions[$(echo "($azimuth + 11.25)/22.5 % 16" | bc)]}
+	direction=${directions[$(echo "($azimuth + 11.25)/22.5 % 16" | bc)] }
 fi
 
 
@@ -345,14 +353,14 @@ then
 			output="$output$dashes "
 		fi
 	done
-	output="$output\033[0m"
+	output="$output"
 	echo -e "$output"
 else
 	if [ $symbols = true ]
 	then
 		icon="$(get_icon $sky)"
 	fi
-	output="$background$text $greeting_text $city $delimiter$data $temperature $scale $icon$dashes$text $wind_text $delimiter$data $wind $speed_unit $direction $dashes$text $humidity_text $delimiter$data $humidity % $dashes$text $pressure_text $delimiter$data $pressure $pressure_unit"
+	output="$delimiter_t$background_t$data_l$temperature$scale $icon $delimiter_w$background_w$data_l$wind$speed_unit $direction $delimiter_h$background_h$data_l$humidity%% 💧 $delimiter_p$background_p$data_l$pressure$pressure_unit ±"
 
 	if [ $daylight = true ]
 	then
