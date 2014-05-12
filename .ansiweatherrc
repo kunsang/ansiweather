@@ -1,0 +1,33 @@
+# modified for ZSH and custom prompt
+
+location:Gießen,DE
+fetch_cmd:curl -s
+units:metric
+symbols:true
+forecast:0
+daylight:false
+
+# Text and Colors
+background_t:%K{yellow}
+background_w:%K{blue}
+background_h:%K{cyan}
+background_p:%K{magenta}
+text:%F{white}
+data_l:%F{white}
+data_d:%F{black}
+delimiter_t:%F{yellow}%{⮂%}%f
+delimiter_w:%f%k%F{blue}%K{yellow}%{⮂%}%k%f
+delimiter_h:%f%k%F{cyan}%K{blue}%{⮂%}%k%f
+delimiter_p:%f%k%F{magenta}%K{cyan}%{⮂%}%k%f
+
+# Icons
+sun:%{😎%}
+moon:%{🌙%}
+clouds:️%{⛅️%}
+rain:️%{💦%}
+fog:%{🌁%}
+mist:%{💦%}
+haze:%{🌌%}
+snow:%{⛄️%}
+thunderstorm:%{⚡️%}
+
